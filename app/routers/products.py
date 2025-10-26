@@ -158,7 +158,7 @@ async def update_product(
             detail='Product not found'
         )
 
-    if db_product.seller_id == current_user.id:
+    if db_product.seller_id != current_user.id or current_user.role != 'admin':
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail='You can only update your own products'
@@ -216,7 +216,7 @@ async def delete_product(
             detail='Product not found'
         )
 
-    if product.seller_id != current_user.id:
+    if product.seller_id != current_user.id or current_user.role != 'admin':
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail='You can only delete your own products'

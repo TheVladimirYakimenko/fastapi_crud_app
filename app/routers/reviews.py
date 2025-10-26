@@ -95,7 +95,7 @@ async def create_review(
             db: AsyncSession = Depends(get_async_db),
             user: UserModel = Depends(get_current_user)
         ):
-    if user.role != 'buyer':
+    if user.role not in ('buyer', 'admin'):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail='Only the buyer can make product reviews'
