@@ -22,8 +22,8 @@ async def update_product_rating(product_id: int, db: AsyncSession):
             ReviewModel.is_active.is_(True)
         )
     )
-    product_rating = result.scalar() or 0.0
-    db.execute(
+    product_rating = round(result.scalar(), 2) or 0.0
+    await db.execute(
         update(ProductModel).where(
             ProductModel.id == product_id
         ).values(
