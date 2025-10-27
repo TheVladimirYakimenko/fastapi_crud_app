@@ -131,12 +131,6 @@ async def delete_review(
             db: AsyncSession = Depends(get_async_db),
             user: UserModel = Depends(get_current_user)
         ):
-    if user.role != 'admin':
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail='Only the admin can delete product reviews'
-        )
-
     result = await db.scalars(
         select(ReviewModel).where(
             ReviewModel.id == review_id,
@@ -149,6 +143,12 @@ async def delete_review(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail='Review not found or already deleted'
+        )
+
+    if user.id != review.user_id or user.role != 'admin':
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail='Only the admin can delete product reviews'
         )
 
     review.is_active = False
