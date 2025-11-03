@@ -145,7 +145,7 @@ async def delete_review(
             detail='Review not found or already deleted'
         )
 
-    if user.id != review.user_id or user.role != 'admin':
+    if user.id != review.user_id and user.role != 'admin':
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail='Only the admin can delete product reviews'

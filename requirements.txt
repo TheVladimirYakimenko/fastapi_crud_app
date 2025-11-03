@@ -15,7 +15,6 @@ fastapi==0.119.1
 greenlet==3.2.4
 h11==0.16.0
 idna==3.11
-jwt==1.4.0
 Mako==1.3.10
 MarkupSafe==3.0.3
 marshmallow==4.0.1
